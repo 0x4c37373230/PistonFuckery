@@ -28,9 +28,17 @@ constexpr unsigned int xyMjHVevKQ = 0xba3260;
 //?getId@ItemStackBase@@QEBAFXZ;
 constexpr unsigned int mgDiVqYgWO = 0xc86b90;
 
+//275487
+//?canSurvive@PistonBlock@@UEBA_NAEAVBlockSource@@AEBVBlockPos@@@Z;
+//constexpr unsigned int WfEASBMNQp = 0x1252cc0;
+
 //279930
 //?isExpanding@PistonBlockActor@@QEBA_NXZ;
-constexpr unsigned int eDWwWumtrL = 0x10ebe40;
+//constexpr unsigned int eDWwWumtrL = 0x10ebe40;
+
+//324681
+//?displayLocalizableMessage@CommandUtils@@YAX_NAEAVPlayer@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@4@@Z;
+constexpr unsigned int MkBCBQogcO = 0x7826b0;
 
 //337902
 //?isRetracting@PistonBlockActor@@QEBA_NXZ;

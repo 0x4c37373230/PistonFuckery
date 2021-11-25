@@ -4,6 +4,18 @@
 #include "mod.h"
 #include "Minecraft.hpp"
 #include "SymHook.hpp"
+#include "deps/termcolor"
+
+/*///////////////////////////////////////////////////////////////
+							ISSUES
+1-	You can't use PistonBlockActor::isExpanding to know if a 
+	piston is extending as it's called in a different 
+	function than PistonBlockActor::isRetracting and that 
+	function gets called inside the function in which 
+	isRetracting is called. Adding a check for expansion in
+	the function where retraction is checked and checking if 
+	the piston is not retracting don't work either.
+///////////////////////////////////////////////////////////////*/
 
 void mod_init() 
 {
@@ -16,24 +28,27 @@ void mod_exit()
 
 std::string getArmType(void* pistonThis)
 {
-	std::string result{ "Regular" };
-
 	if (*((BYTE*)pistonThis + 208))
-		result = "Sticky";
-	return result;
+		return "Sticky";
+	return "Regular";
 }
 
 void pistonArmState(void* _pistonThis, char state)
 {
-	std::string getArm{ getArmType(_pistonThis) };
-
-	if (state == 'e')
+	switch (state)
 	{
-		std::cout << getArm << " piston is expanding" << std::endl;
-	}
-	else
-	{
-		std::cout << getArm << " piston is retracting" << std::endl;
+	case 'e':
+		std::cout 
+			<< "Piston Action\n" << termcolor::bright_green
+			<< "\tPiston Type: " << termcolor::bright_magenta << getArmType(_pistonThis) << termcolor::bright_green << std::endl
+			<< "\tPiston Action: " << termcolor::bright_magenta << "Extending" << termcolor::reset << std::endl;
+		break;
+	default:
+		std::cout
+			<< "Piston Action\n" << termcolor::bright_green
+			<< "\tPiston Type: " << termcolor::bright_magenta << getArmType(_pistonThis) << termcolor::bright_green << std::endl
+			<< "\tPiston Action: " << termcolor::bright_magenta << "Retracting" << termcolor::reset << std::endl;
+		break;
 	}
 }
 
@@ -44,24 +59,29 @@ THook(char, fFEJoOUAfG, void* _this, BlockSource* a2)
 }
 
 //PistonBlockActor::isExpanded
-THook(bool, D_LHvgIEZR, void* _this) 
+THook(bool, D_LHvgIEZR, void* _this)
 {
-	std::string getArm{ getArmType(_this) };
-
-	std::cout << getArm << " piston was updated" << std::endl;
-	return original(_this);
-}
-
-//PistonBlockActor::isExpanding
-THook(bool, eDWwWumtrL, void* _this)
-{
-	pistonArmState(_this, 'e');
+	std::cout 
+		<< termcolor::bright_yellow << getArmType(_this) 
+		<< " piston updated" << termcolor::reset << std::endl;
 	return original(_this);
 }
 
 //PistonBlockActor::isRetracting
 THook(bool, Xq_Bdi_TjC, void* _this)
 {
-	pistonArmState(_this, 'r');
-	return original(_this);
+	bool ogFunc{ original(_this) };
+
+	if (ogFunc)
+		pistonArmState(_this, 'r');
+	return ogFunc;
 }
+/*
+//PistonBlockActor::isExpanding
+THook(bool, eDWwWumtrL, void* _this)
+{}
+
+//PistonBlock::canSurvive
+THook(bool, WfEASBMNQp, void* _this, BlockSource* a2, BlockPos* a3)
+{}
+*/
