@@ -91,12 +91,13 @@ THook(bool, Xq_Bdi_TjC, void* _this)
 	}
 	return ogFunc;
 }
-/*
-//PistonBlockActor::isExpanding
-THook(bool, eDWwWumtrL, void* _this)
-{}
 
 //PistonBlock::canSurvive
 THook(bool, WfEASBMNQp, void* _this, BlockSource* a2, BlockPos* a3)
-{}
-*/
+{
+	if (SYMCALL(bool, eDWwWumtrL, SYMCALL(BlockActor*, WcoDPEQrUn, a2, a3)))
+	{
+		pistonArmState(SYMCALL(BlockActor*, WcoDPEQrUn, a2, a3), 'e');
+	}
+	return original(_this, a2, a3);
+}
