@@ -4,7 +4,11 @@
 #include "mod.h"
 #include "Minecraft.hpp"
 #include "SymHook.hpp"
-#include "deps/termcolor"
+#include "termcolor/termcolor"
+
+const bool logArmUpdates{ log_arm_updates() };
+const bool logUpdates{ log_updates() };
+const bool deleteBlocks{ delete_blocks() };
 
 /*///////////////////////////////////////////////////////////////
 							ISSUES
@@ -20,6 +24,9 @@
 void mod_init() 
 {
 	std::cout << "Piston Fuckery successfully injected" << std::endl;
+	std::cout << "Log Arm Updates: " << logArmUpdates << std::endl;
+	std::cout << "Log Updates: " << logUpdates << std::endl;
+	std::cout << "Block Deletion on Extension: " << deleteBlocks << std::endl;
 }
 void mod_exit() 
 {
@@ -55,15 +62,20 @@ void pistonArmState(void* _pistonThis, char state)
 //PistonBlockActor::_checkAttachedBlocks
 THook(char, fFEJoOUAfG, void* _this, BlockSource* a2)
 {
-	return '1';
+	if (deleteBlocks)
+		return '1';
+	return original(_this, a2);
 }
 
 //PistonBlockActor::isExpanded
 THook(bool, D_LHvgIEZR, void* _this)
 {
-	std::cout 
-		<< termcolor::bright_yellow << getArmType(_this) 
-		<< " piston updated" << termcolor::reset << std::endl;
+	if (logUpdates)
+	{
+		std::cout
+			<< termcolor::bright_yellow << getArmType(_this)
+			<< " piston updated" << termcolor::reset << std::endl;
+	}
 	return original(_this);
 }
 
@@ -72,8 +84,11 @@ THook(bool, Xq_Bdi_TjC, void* _this)
 {
 	bool ogFunc{ original(_this) };
 
-	if (ogFunc)
-		pistonArmState(_this, 'r');
+	if (logArmUpdates)
+	{
+		if (ogFunc)
+			pistonArmState(_this, 'r');
+	}
 	return ogFunc;
 }
 /*

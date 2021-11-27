@@ -1,0 +1,12 @@
+[package]
+name = "p_utilities"
+version = "0.1.0"
+edition = "2018"
+
+[lib]
+crate-type = ["dylib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+simple_config_parser = "1.0.0"

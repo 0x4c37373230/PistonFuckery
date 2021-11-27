@@ -36,6 +36,9 @@
     <ClInclude Include="SymHook.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="p_utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
