@@ -42,7 +42,7 @@ constexpr unsigned int eDWwWumtrL = 0x10ebe40;
 
 //324681
 //?displayLocalizableMessage@CommandUtils@@YAX_NAEAVPlayer@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@4@@Z;
-constexpr unsigned int MkBCBQogcO = 0x7826b0;
+//constexpr unsigned int MkBCBQogcO = 0x7826b0;
 
 //337902
 //?isRetracting@PistonBlockActor@@QEBA_NXZ;
@@ -51,6 +51,14 @@ constexpr unsigned int Xq_Bdi_TjC = 0x10ebe50;
 //356766
 //?isExpanded@PistonBlockActor@@QEBA_NXZ;
 constexpr unsigned int D_LHvgIEZR = 0x10ebe20;
+
+//415764
+//?getFacingDir@PistonBlockActor@@QEAAAEBVBlockPos@@AEAVBlockSource@@@Z;
+constexpr unsigned int VxWHJXdyOl = 0x10e9c60;
+
+//421731
+//?_hasBlockAttached@PistonBlockActor@@AEAA_NAEBVBlockPos@@@Z;
+//constexpr unsigned int mzGZCnpVKr = 0x10dd670;
 
 //486068
 //?getName@ItemStackBase@@QEBA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@XZ;

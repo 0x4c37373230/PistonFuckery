@@ -10,17 +10,6 @@ const bool logArmUpdates{ log_arm_updates() };
 const bool logUpdates{ log_updates() };
 const bool deleteBlocks{ delete_blocks() };
 
-/*///////////////////////////////////////////////////////////////
-							ISSUES
-1-	You can't use PistonBlockActor::isExpanding to know if a 
-	piston is extending as it's called in a different 
-	function than PistonBlockActor::isRetracting and that 
-	function gets called inside the function in which 
-	isRetracting is called. Adding a check for expansion in
-	the function where retraction is checked and checking if 
-	the piston is not retracting don't work either.
-///////////////////////////////////////////////////////////////*/
-
 void mod_init() 
 {
 	std::cout << "Piston Fuckery successfully injected" << std::endl;
@@ -50,7 +39,7 @@ void pistonArmState(void* _pistonThis, char state)
 			<< "\tPiston Type: " << termcolor::bright_magenta << getArmType(_pistonThis) << termcolor::bright_green << std::endl
 			<< "\tPiston Action: " << termcolor::bright_magenta << "Extending" << termcolor::reset << std::endl;
 		break;
-	default:
+	case 'r':
 		std::cout
 			<< "Piston Action\n" << termcolor::bright_green
 			<< "\tPiston Type: " << termcolor::bright_magenta << getArmType(_pistonThis) << termcolor::bright_green << std::endl
@@ -96,8 +85,6 @@ THook(bool, Xq_Bdi_TjC, void* _this)
 THook(bool, WfEASBMNQp, void* _this, BlockSource* a2, BlockPos* a3)
 {
 	if (SYMCALL(bool, eDWwWumtrL, SYMCALL(BlockActor*, WcoDPEQrUn, a2, a3)))
-	{
 		pistonArmState(SYMCALL(BlockActor*, WcoDPEQrUn, a2, a3), 'e');
-	}
 	return original(_this, a2, a3);
 }
