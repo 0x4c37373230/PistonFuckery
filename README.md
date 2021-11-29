@@ -1,5 +1,5 @@
 # PistonFuckery
-A MCBE dll mod (mainly for testing) which modifies some piston functions. The current version modifies `PistonBlockActor::_checkAttachedBlocks` to return true. The results are the same as in [this](https://www.youtube.com/watch?v=11b7JH2Pw0c) video. It also adds logging for piston updates (just retraction and updates for now; (`PistonBlockActor::isExtending` and `PistonBlockActor:isRetracting`) and a way to get the piston type (a recreation of `PistonBlockActor::getCorrectArmBlock`). Credits to Pixel for (you could say) discovering this and to [Player] for the BDS mod solution template
+A MCBE dll mod (mainly for testing) which modifies some piston functions. The current version modifies `PistonBlockActor::_checkAttachedBlocks` to return true. The results are the same as in [this](https://www.youtube.com/watch?v=11b7JH2Pw0c) video. It also adds logging for piston updates (extension, retraction and updates; (`PistonBlockActor::isExtending` and `PistonBlock::canSurvive`, `PistonBlockActor:isRetracting` and `PistonBlockActor::isExtended`) and a way to get the piston type (a recreation of `PistonBlockActor::getCorrectArmBlock`). Credits to Pixel for (you could say) discovering this and to [Player] for the BDS mod solution template
 
 ## Usage
 Download the latest release on the releases section. The zip file will contain 2 dlls (p_utilities and MCMODDLL) and file named config.cfg. Move all the files to the main BDS folder and inject MCMODDLL with the steps below
@@ -22,3 +22,10 @@ deleteBlocksOnExtension = 1
 
 ## How to update
 Get and update the RVAs (Relative Virtual Addresses) and update them in the `SymHook.hpp` file. You can do this with [my own pdb dumper](https://github.com/0x4c37373230/BDumper)  Check if the functions being hooked's formal parameters (which arguments they take) are still the same; if they're not, update them.
+
+### TODO
+- Logging through chat messages as opposed to the console
+- Get which direction the piston is facing
+- Get the piston coordinates
+- Customizable push limit
+- Check if the piston has blocks attached
