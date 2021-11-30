@@ -20,7 +20,7 @@ deleteBlocksOnExtension = 0
 customPushLimit = 1
 newPushLimit = 16
 ```
-`armLogging` determines if the mod should log piston extension and retraction, `updateLogging` determines if the mod should log piston updates, and `deleteBlocksOnExtension` determines whether pistons should delete the block facing them on extension or just extend normally. All of these values can be set to 1 to enable them or 0 to disable them
+`armLogging` determines if the mod should log piston extension and retraction, `updateLogging` determines if the mod should log piston updates, and `deleteBlocksOnExtension` determines whether pistons should delete the block facing them on extension or just extend normally. All of these values can be set to 1 to enable them or 0 to disable them. `customPushLimit` and `newPushLimit` are not yet usable
 
 ## How to update
 Get and update the RVAs (Relative Virtual Addresses) and update them in the `SymHook.hpp` file. You can do this with [my own pdb dumper](https://github.com/0x4c37373230/BDumper)  Check if the functions being hooked's formal parameters (which arguments they take) are still the same; if they're not, update them.
@@ -29,5 +29,5 @@ Get and update the RVAs (Relative Virtual Addresses) and update them in the `Sym
 - Logging through chat messages as opposed to the console
 - Get which direction the piston is facing
 - Get the piston coordinates
-- Customizable push limit
+- Customizable push limit [Partially done. See 'Issues' section in `mod.cpp`]
 - Check if the piston has blocks attached
