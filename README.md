@@ -31,3 +31,4 @@ Get and update the RVAs (Relative Virtual Addresses) and update them in the `Sym
 - Get the piston coordinates
 - Customizable push limit [Partially done. See 'Issues' section in `mod.cpp`]
 - Check if the piston has blocks attached
+- Update to 1.18
