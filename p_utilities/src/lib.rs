@@ -31,3 +31,19 @@ pub extern fn log_arm_updates() -> bool {
 
     log != 0
 }
+
+#[no_mangle]
+pub extern fn change_push_limit() -> bool {
+    let cfg = Config::new().file("./config.cfg").unwrap();
+    let log: i32 = cfg.get("customPushLimit").unwrap();
+
+    log != 0
+}
+
+#[no_mangle]
+pub extern fn new_push_limit() -> i32 {
+    let cfg = Config::new().file("./config.cfg").unwrap();
+    let log: i32 = cfg.get("newPushLimit").unwrap();
+
+    log
+}
