@@ -154,6 +154,3 @@ struct LevelContainerModel
 		return ((Player**)this)[26];
 	}
 };
-
-struct PistonBlockActor 
-{};
