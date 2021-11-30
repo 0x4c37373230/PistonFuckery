@@ -16,7 +16,9 @@ This file can be modified to control which modifications should be active. The f
 ```ini
 armLogging = 1
 updateLogging = 1
-deleteBlocksOnExtension = 1
+deleteBlocksOnExtension = 0
+customPushLimit = 1
+newPushLimit = 16
 ```
 `armLogging` determines if the mod should log piston extension and retraction, `updateLogging` determines if the mod should log piston updates, and `deleteBlocksOnExtension` determines whether pistons should delete the block facing them on extension or just extend normally. All of these values can be set to 1 to enable them or 0 to disable them
 
