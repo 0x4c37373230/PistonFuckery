@@ -6,25 +6,11 @@
 #include "Minecraft.hpp"
 #include "SymHook.hpp"
 #include "termcolor/termcolor"
-#include "gsl/gsl"
-
-/*/////////////////////////////////////////////////////
-						ISSUES
-To finish the part which would allow for custom push
-limit; I need the gsl::details struct which I haven't
-been able to reconstruct from BDS. It should belong to
-microsoft's GSL library; but it's not there in the 
-newest version (however a 'details' namespace does 
-exist inside the gsl namespace) nor in the newest 
-release (there isn't even a 'details' namespace
-
-*/////////////////////////////////////////////////////
 
 const bool logArmUpdates{ log_arm_updates() };
 const bool logUpdates{ log_updates() };
 const bool deleteBlocks{ delete_blocks() };
-const bool changePushLimit{ change_push_limit() };
-const __int32 pushLimit{ push_limit() };
+//const bool changePushLimit{ change_push_limit() };
 
 void mod_init() 
 {
@@ -32,6 +18,8 @@ void mod_init()
 	std::cout << "Log Arm Updates: " << logArmUpdates << std::endl;
 	std::cout << "Log Updates: " << logUpdates << std::endl;
 	std::cout << "Block Deletion on Extension: " << deleteBlocks << std::endl;
+	//std::cout << "Custom Push Limit: " << changePushLimit << std::endl;
+	//std::cout << "New Push Limit: " << 18 << std::endl;
 }
 void mod_exit() 
 {
@@ -40,9 +28,14 @@ void mod_exit()
 
 std::string getArmType(void* pistonThis)
 {
-	if (*((BYTE*)pistonThis + 208))
+	if (*((BYTE*)pistonThis + 200))
 		return "Sticky";
 	return "Regular";
+}
+
+unsigned __int64 __fastcall size(void* _this)
+{
+	return *((unsigned __int64*)_this + 4);
 }
 
 void pistonArmState(void* _pistonThis, char state)
@@ -68,13 +61,19 @@ void pistonArmState(void* _pistonThis, char state)
 THook(char, fFEJoOUAfG, void* _this, BlockSource* a2)
 {
 	if (deleteBlocks)
-		return '1'; /*
+		return '1';/*
 	else if (changePushLimit)
 	{
-		gsl::details *v15{ (gsl::details*)(*((unsigned __int64*)_this + 30) - *((unsigned __int64*)_this + 29)) };
+		unsigned __int64 v15{ size(a2) };
+		__int64 v16{ (*(__int64(__fastcall**)(unsigned __int64))(*(unsigned __int64*)v15 + 1448i64))(v15) };
+		char v23[8];
+		bool v17{ (unsigned int)SYMCALL(unsigned __int64, VekUuoPYdu, v16, v23) != 0 };
 
-		if ((unsigned __int64)((__int64)v15 / 12) > pushLimit)
+		if ((unsigned __int64)((*((unsigned __int64*)_this + 29) - *((unsigned __int64*)_this + 28)) / 12i64) > 18)
+		{
 			return 0;
+		}
+		return v17;
 	} */
 	return original(_this, a2);
 }
@@ -117,19 +116,17 @@ THook(bool, DRHTpLpIcu, void* _this, BlockSource* a2, BlockPos* a3, unsigned __i
 {
 	if (changePushLimit)
 	{
-		unsigned __int64* v5{ (unsigned __int64*)((char*)_this + 232) };
-		__int64 v28{};
+		unsigned __int64* v5{ (unsigned __int64*)((char*)_this + 224) };
+		__int64 v28 = *((unsigned __int64*)_this + 29);
 
 		if (!SYMCALL(char, mzGZCnpVKr, _this, a3))
 		{
-			v28 = *((unsigned __int64*)_this + 30);
-			if (!v28 == *((unsigned __int64*)_this + 31))
+			if (!v28 == *((unsigned __int64*)_this + 30))
 			{
 				v5[1] += 12i64;
 			}
 		}
-
-		return (unsigned __int64)((v5[1] - *v5) / 12i64) <= pushLimit;
+		return (unsigned __int64)((v5[1] - *v5) / 12i64) <= 18;
 	}
-}
-*/
+	return original(_this, a2, a3, a4, a5);
+} */
